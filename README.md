@@ -4,8 +4,6 @@
 # About
 <br>What if a display server was rootless and ran on the user level instead of root, That is PJSQDisplay and it works on allowing only the user your user to render the display and not root itself, Since we don't want root to run anything we will use JS or Javascript to render the backend stuff, And then Qt wraps around Javascript to give you a display of the desktop, While Javascript wraps around Python and this will allow Python to detect if a keylogger is running or keys are being monitored and it will detach the session while not interrupting the users workflow.</br>
 
-# How It Works
-
 # Python Module
 <br>Python is the backend and this handles stuff like Keylogging Detection and among other modules needed for security of the Desktop Manager, This will need root but other modules like JS and Qt will not need root to function since those modules will sit in the userspace basically the main user that is using the computer.</br>
 
