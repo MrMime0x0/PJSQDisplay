@@ -1,23 +1,72 @@
+# QXD11 Desktop Manager
+
+QXD11 is an effort to create a **rootless desktop manager** using **Python, JavaScript (JS), and Qt**. Development is ongoing, and the project may take some time to reach full functionality.  
+
+>  **Root Access:** Only Python requires root access for security purposes. All other modules (JS, Qt) run entirely in **userspace**.
+
+---
+
 # General Info
-<br>Just know that this is a effort to create a desktop manager from Python and Javascript and then Qt languages plus i suck at coding so it will take a bit of time before i can fully start development on this project and QXD11 will be rootless except Python since that needs root for the security of the desktop manager, It also uses SELinux, AppArmor, Auditd for the main root security of Python so Python can detect keyloggers that will happen on the system and SELinux, AppArmor, Auditd will require root permissions to function, But Qt, JS will not require root to function as they are userspace only.</br>
 
-# About
-<br>What if a display server was rootless and ran on the user level instead of root, That is QXD11 and it works on allowing only the user your user to render the display or desktop and not root itself, Since we don't want root to run anything we will use JS or Javascript to render the backend stuff, And then Qt wraps around Javascript to give you a display of the desktop, While Javascript wraps around Python and this will allow Python to detect if a keylogger is running or keys are being monitored and it will detach the session while not interrupting the users workflow.</br>
+• Desktop manager is **rootless**, except for Python, which requires root to maintain security.  
+• Uses **SELinux, AppArmor, and Auditd** to provide multi-layered protection.  
+• Python detects keyloggers and other threats without interrupting the user’s workflow.  
+• JS and Qt run in userspace only — no root required.
 
-# SELinux Module
-<br>SELinux will act as the first layer of security basically keeping the Python module safe from bad actors if that ever comes to the MAC feature or Mandatory Access Control, And this will be a type enforcement for the python module and will have a set of rules built in so python can be safe and this needs to be run as root along side the python module.</br>
+---
 
-# AppArmor Module
-<br>AppArmor will act as the second layer providing even more security for the JS Module and this will act as a path based profile for the rules of the JS Module hence why its the second layer to the SELinux module layer.</br>
+# Architecture Overview
 
-# Auditd Module
-<br>Auditd will act as the security logging module for the Python Module, JS Module, Qt Module, AppArmor Module, SELinux Module and this will log every single thing that has to do with actions that are being done on those modules and the stuff that goes on or if it goes wrong so it can be debugged by the users who use QXD11.</br>
+QXD11 is structured to keep root access minimal and maintain a secure, user-level display server:
 
-# Python Module
-<br>Python is the backend and this handles stuff like Keylogging Detection and among other modules needed for security of the Desktop Manager, This will need root but other modules like JS and Qt will not need root to function since those modules will sit in the userspace basically the main user that is using the computer.</br>
+1. **Python Module**  
+   ‣ Backend security module  
+   ‣ Handles **keylogger detection** and other security tasks  
+   ‣ Requires root to enforce security policies  
 
-# JS Module or Javascript Module
-<br>JS or Javascript will work by rendering the cursor in HTML or CSS and this will allow for the cursor to be render second after Python boots up first and JS will wrap around Python the second Python is started after the computer is started up and running</br>
+2. **JavaScript (JS) Module**  
+   ‣ Renders cursor and backend visual elements  
+   ‣ Wraps around Python, starting after Python initializes  
+   ‣ Runs entirely in userspace  
 
-# Qt Module
-<br>Finally Qt, This will wrap around JS and take the rendered cursor and put it onto the desktop and this will render the rest of the desktop and this is the final process or module to be booted up and then executed, This will allow the user to see the Desktop and interact with it and Qt will not need root to function and only userspace to finally function and give the user a desktop to interact with.</br>
+3. **Qt Module**  
+   ‣ Wraps around JS to render the full desktop interface  
+   ‣ Displays and interacts with the desktop  
+   ‣ Userspace only, no root required  
+
+---
+
+# Security Modules
+
+• **SELinux Module**  
+   ➜ First layer of security (Mandatory Access Control)  
+   ➜ Protects Python module from malicious actors  
+   ➜ Requires root to function  
+
+• **AppArmor Module**  
+   ➜ Second layer, path-based rules for JS module  
+   ➜ Enhances security on top of SELinux  
+
+• **Auditd Module**  
+   ➜ Logs actions for Python, JS, Qt, SELinux, and AppArmor modules  
+   ➜ Helps debug issues and maintain transparency  
+
+---
+
+# How it Works
+
+• System boots → Python module initializes (root)  
+• JS module starts → renders cursor and backend visuals  
+• Qt module launches → displays desktop for user interaction  
+• Multi-layered security ensures **keylogger detection and module protection** while keeping the desktop fully functional  
+
+---
+
+# Key Points
+
+• Minimal root usage — only Python & security modules require root  
+• Userspace modules (JS, Qt) handle **all rendering** and desktop interaction  
+• Multi-layered security: SELinux → AppArmor → Auditd → Python monitoring  
+• Designed for **secure, user-level display server** on Qubes OS with KVM  
+
+────────────────────────────
